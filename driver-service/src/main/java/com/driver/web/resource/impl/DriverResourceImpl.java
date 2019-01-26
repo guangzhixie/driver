@@ -1,4 +1,4 @@
-package com.driver.web.resource;
+package com.driver.web.resource.impl;
 
 
 import com.driver.service.DriverService;
@@ -6,6 +6,7 @@ import com.driver.web.model.BasicResponse;
 import com.driver.web.model.FindDriverRequest;
 import com.driver.web.model.FindDriverResponse;
 import com.driver.web.model.LocationRequest;
+import com.driver.web.resource.DriverResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-public class DriverResourceImpl implements DriverResource{
+public class DriverResourceImpl implements DriverResource {
     private static final Logger logger = LoggerFactory.getLogger(DriverResourceImpl.class);
 
     @Resource

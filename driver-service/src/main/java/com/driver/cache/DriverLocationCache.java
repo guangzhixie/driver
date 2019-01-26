@@ -6,6 +6,7 @@ import com.google.common.cache.CacheBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class DriverLocationCache {
@@ -21,14 +22,14 @@ public class DriverLocationCache {
 
     @PostConstruct
     public void preLoad() {
-        //TODO: preload from DB for each driver's last location
-    }
-
-    public LatLang getLocationById(int id) {
-        return locationCache.getIfPresent(id);
+        //TODO: preload each driver's last location from DB
     }
 
     public void updateLocation(int id, LatLang latestLocation) {
         locationCache.put(id, latestLocation);
+    }
+
+    public ConcurrentMap<Integer, LatLang> getAllCurrentDriverLocations() {
+        return locationCache.asMap();
     }
 }

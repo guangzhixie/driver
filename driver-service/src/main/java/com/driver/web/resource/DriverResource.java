@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
+
 
 @RestController
 public class DriverResource {
@@ -19,7 +22,7 @@ public class DriverResource {
     @Resource
     private DriverService driverService;
 
-    @RequestMapping(value = "/drivers/{id}/location", produces = "application/json")
+    @RequestMapping(value = "/drivers/{id}/location", method = PUT, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity updateLocation(@PathVariable Long id, @RequestBody LocationRequest locationRequest) {
         logger.info("Update location: id={}, locationRequest={}", id, locationRequest);

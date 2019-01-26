@@ -9,5 +9,5 @@
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.driver.main.DriverServiceApplication"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="driver-service_main"/>
-<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Dlog4j.configurationFile=&quot;./config/log4j2.xml&quot; -DLog4jContextSelector=&quot;org.apache.logging.log4j.core.async.AsyncLoggerContextSelector&quot; -Dspring.messages.basename=messages_en -Dspring.application.name=&quot;driver-service&quot;"/>
+<stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-DLog4jContextSelector=&quot;org.apache.logging.log4j.core.async.AsyncLoggerContextSelector&quot; -Dspring.messages.basename=messages_en -Dspring.application.name=&quot;driver-service&quot;"/>
 </launchConfiguration>

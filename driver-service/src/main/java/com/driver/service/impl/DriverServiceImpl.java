@@ -1,8 +1,9 @@
 package com.driver.service.impl;
 
-import com.driver.cache.DriverLocationCache;
-import com.driver.model.LatLang;
+import com.driver.model.DriverLocation;
 import com.driver.service.DriverService;
+import com.driver.service.FindDriverHandler;
+import com.driver.service.UpdateLocationHandler;
 import com.driver.validator.FindDriverValidator;
 import com.driver.validator.LocationUpdateValidator;
 import com.driver.web.model.BasicResponse;
@@ -15,7 +16,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static com.driver.enums.LocationUpdateError.SYSTEM_ERROR;
 
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -28,7 +32,10 @@ public class DriverServiceImpl implements DriverService {
     private FindDriverValidator findDriverValidator;
 
     @Resource
-    private DriverLocationCache driverLocationCache;
+    private UpdateLocationHandler updateLocationHandler;
+
+    @Resource
+    private FindDriverHandler findDriverHandler;
 
     @Override
     public BasicResponse updateLocation(int id, LocationRequest locationRequest) {
@@ -37,10 +44,13 @@ public class DriverServiceImpl implements DriverService {
             return validationResponse;
         }
 
-        driverLocationCache.updateLocation(id, new LatLang(locationRequest.getLatitude(), locationRequest.getLongitude()));
-        //TODO: update to DB
-
-        return new BasicResponse(HttpStatus.OK, null);
+        try {
+            updateLocationHandler.handle(id, locationRequest);
+            return new BasicResponse(HttpStatus.OK, null);
+        } catch (Exception e) {
+            logger.warn("Failed to update location for request={}", locationRequest, e);
+            return new BasicResponse(HttpStatus.UNPROCESSABLE_ENTITY, Collections.singletonList(SYSTEM_ERROR.getMessage()));
+        }
     }
 
     @Override
@@ -49,7 +59,13 @@ public class DriverServiceImpl implements DriverService {
         if (validationResponse != null) {
             return validationResponse;
         }
-        //TODO: find driver
-        return new FindDriverResponse(HttpStatus.OK, null, new ArrayList<>(0));
+
+        try {
+            List<DriverLocation> driverLocations = findDriverHandler.handle(findDriverRequest);
+            return new FindDriverResponse(HttpStatus.OK, null, driverLocations);
+        } catch (Exception e) {
+            logger.warn("Failed to find driver for request={}", findDriverRequest, e);
+            return new FindDriverResponse(HttpStatus.UNPROCESSABLE_ENTITY, Collections.singletonList(SYSTEM_ERROR.getMessage()), null);
+        }
     }
 }

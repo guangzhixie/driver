@@ -1,11 +1,13 @@
 package com.driver.cache;
 
 import com.driver.model.LatLang;
+import com.driver.persistence.repository.DriverRepository;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.util.concurrent.ConcurrentMap;
 
 @Component
@@ -20,9 +22,17 @@ public class DriverLocationCache {
             .maximumSize(MAX_SIZE)
             .build();
 
+    @Resource
+    private DriverRepository driverRepository;
+
     @PostConstruct
     public void preLoad() {
-        //TODO: preload each driver's last location from DB
+        // preload each driver's last location from DB
+        driverRepository.findAll().forEach(
+                driverLocationEntity ->
+                        locationCache.put(driverLocationEntity.getId(),
+                                new LatLang(driverLocationEntity.getLatitude(), driverLocationEntity.getLongitude()))
+        );
     }
 
     public void updateLocation(int id, LatLang latestLocation) {

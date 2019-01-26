@@ -1,5 +1,7 @@
 package com.driver.service.impl;
 
+import com.driver.cache.DriverLocationCache;
+import com.driver.model.LatLang;
 import com.driver.service.DriverService;
 import com.driver.validator.LocationUpdateValidator;
 import com.driver.web.model.LocationRequest;
@@ -18,6 +20,9 @@ public class DriverServiceImpl implements DriverService {
     @Resource
     private LocationUpdateValidator locationUpdateValidator;
 
+    @Resource
+    private DriverLocationCache driverLocationCache;
+
     @Override
     public LocationResponse updateLocation(int id, LocationRequest locationRequest) {
         LocationResponse locationResponseAfterValidation = locationUpdateValidator.validate(id, locationRequest);
@@ -25,7 +30,9 @@ public class DriverServiceImpl implements DriverService {
             return locationResponseAfterValidation;
         }
 
-        //TODO: update location after validation
+        driverLocationCache.updateLocation(id, new LatLang(locationRequest.getLatitude(), locationRequest.getLongitude(), locationRequest.getAccuracy()));
+        //TODO: update to DB
+
         return new LocationResponse(HttpStatus.OK, null);
     }
 }

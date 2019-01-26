@@ -1,0 +1,72 @@
+buildscript {
+    ext {
+        springBootPlugin = 'org.springframework.boot:spring-boot-gradle-plugin'
+        springBootVersion = '2.0.6.RELEASE'
+    }
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath("${springBootPlugin}:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'java'
+    id 'eclipse'
+    id "org.springframework.boot" version "2.0.6.RELEASE"
+    id 'io.spring.dependency-management' version "1.0.6.RELEASE"
+    id 'net.ltgt.apt' version '0.10'
+    id 'io.franzbecker.gradle-lombok' version '1.8'
+}
+
+group 'driver'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    integrationTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/itest/java')
+        }
+        resources.srcDir file('src/itest/resources')
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntime.extendsFrom testRuntime
+    
+    compile.exclude module: 'spring-boot-starter-logging'
+    compile.exclude module: 'spring-boot-starter-tomcat'
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-log4j2"
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.6"
+    implementation "com.lmax:disruptor:3.3.6"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core:2.9.0'
+    testImplementation 'info.cukes:cucumber-java:1.2.5'
+    testImplementation 'info.cukes:cucumber-junit:1.2.5'
+    testImplementation 'info.cukes:cucumber-spring:1.2.5'
+}
+
+springBoot{
+    mainClassName= 'com.driver.main.DriverServiceApplication'
+}
+
+

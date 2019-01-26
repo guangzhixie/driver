@@ -24,7 +24,7 @@ public class DriverResource {
 
     @RequestMapping(value = "/drivers/{id}/location", method = PUT, produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity updateLocation(@PathVariable Long id, @RequestBody LocationRequest locationRequest) {
+    public ResponseEntity updateLocation(@PathVariable int id, @RequestBody LocationRequest locationRequest) {
         logger.info("Update location: id={}, locationRequest={}", id, locationRequest);
         LocationResponse locationResponse = driverService.updateLocation(id, locationRequest);
         logger.info("Update location response: {}", locationResponse);

@@ -57,6 +57,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.8.6"
     implementation "com.lmax:disruptor:3.3.6"
+    implementation "mysql:mysql-connector-java"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-core:2.9.0'

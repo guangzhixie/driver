@@ -18,7 +18,7 @@ public class DriverServiceImpl implements DriverService {
     private LocationUpdateValidator locationUpdateValidator;
 
     @Override
-    public LocationResponse updateLocation(Long id, LocationRequest locationRequest) {
+    public LocationResponse updateLocation(int id, LocationRequest locationRequest) {
         return locationUpdateValidator.validate(id, locationRequest);
         //TODO: update location after validation
     }

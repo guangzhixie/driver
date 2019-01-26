@@ -15,7 +15,7 @@ import java.util.List;
 public class LocationUpdateValidator {
     private static final Logger logger = LoggerFactory.getLogger(LocationUpdateValidator.class);
 
-    public LocationResponse validate(Long id, LocationRequest locationRequest) {
+    public LocationResponse validate(int id, LocationRequest locationRequest) {
         List<String> errors = new ArrayList<>();
 
         // TODO: validate request

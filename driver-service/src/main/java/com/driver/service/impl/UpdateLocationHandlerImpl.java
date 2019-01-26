@@ -17,6 +17,7 @@ public class UpdateLocationHandlerImpl implements UpdateLocationHandler {
     @Override
     public void handle(Integer id, LocationRequest locationRequest) {
         driverLocationCache.updateLocation(id, new LatLang(locationRequest.getLatitude(), locationRequest.getLongitude()));
+        //TODO: handle accuracy
         //TODO: update location in DB
     }
 }

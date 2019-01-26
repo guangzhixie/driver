@@ -1,5 +1,6 @@
 package com.driver.main;
 
+import com.driver.web.model.FindDriverRequest;
 import com.driver.web.model.LocationRequest;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -30,6 +31,17 @@ public class DriverServiceStepDef {
         HttpEntity<LocationRequest> entity = new HttpEntity<>(locationRequests.get(0), headers);
         try {
             ResponseEntity response = restTemplate.exchange(HOST + "/drivers/" + id + "/location", HttpMethod.PUT, entity, Object.class);
+            actualHttpStatus = response.getStatusCode();
+        } catch (final HttpClientErrorException e) {
+            actualHttpStatus = e.getStatusCode();
+        }
+    }
+
+    @When("^find driver$")
+    public void findDriver(List<FindDriverRequest> findDriverRequests) {
+        FindDriverRequest request = findDriverRequests.get(0);
+        try {
+            ResponseEntity response = restTemplate.getForEntity(HOST + "/drivers?latitude="+request.getLatitude()+"&longitude="+request.getLongitude(), Object.class);
             actualHttpStatus = response.getStatusCode();
         } catch (final HttpClientErrorException e) {
             actualHttpStatus = e.getStatusCode();

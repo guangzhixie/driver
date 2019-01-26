@@ -7,8 +7,11 @@ import com.driver.persistence.repository.DriverRepository;
 import com.driver.service.UpdateLocationHandler;
 import com.driver.web.model.LocationRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.Clock;
+import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,6 +29,7 @@ public class UpdateLocationHandlerImpl implements UpdateLocationHandler {
     private DriverLocationCache driverLocationCache;
 
     @Override
+    @Transactional
     public void handle(Integer id, LocationRequest locationRequest) {
         driverLocationCache.updateLocation(id, new LatLang(locationRequest.getLatitude(), locationRequest.getLongitude()));
         //TODO: handle accuracy
@@ -35,12 +39,17 @@ public class UpdateLocationHandlerImpl implements UpdateLocationHandler {
     }
 
     private void updateLocationInDB(Integer id, LocationRequest locationRequest) {
-        driverRepository.save(DriverLocationEntity.builder()
+        LocalDateTime currentTimeInGmt = LocalDateTime.now(Clock.systemUTC());
+        DriverLocationEntity entityToUpdate = DriverLocationEntity.builder()
                 .id(id)
                 .latitude(locationRequest.getLatitude())
                 .longitude(locationRequest.getLongitude())
                 .accuracy(locationRequest.getAccuracy())
-                .build()
-        );
+                .gmt_modified(currentTimeInGmt)
+                .build();
+        if (!driverRepository.existsById(id)) {
+            entityToUpdate.setGmt_create(currentTimeInGmt);
+        }
+        driverRepository.save(entityToUpdate);
     }
 }

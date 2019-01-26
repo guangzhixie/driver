@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "driver_location")
@@ -19,4 +20,5 @@ public class DriverLocationEntity {
 
     private Double latitude, longitude;
     private Float accuracy;
+    private LocalDateTime gmt_create, gmt_modified;
 }

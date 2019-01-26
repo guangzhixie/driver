@@ -1,4 +1,4 @@
-package com.driver.model;
+package com.driver.persistence.entity;
 
 import lombok.Data;
 

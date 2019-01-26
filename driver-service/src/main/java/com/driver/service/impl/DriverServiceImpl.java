@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 
-import static com.driver.enums.LocationUpdateError.SYSTEM_ERROR;
+import static com.driver.enums.DriverServiceError.SYSTEM_ERROR;
 
 @Service
 public class DriverServiceImpl implements DriverService {

@@ -12,8 +12,8 @@ import com.driver.validator.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.driver.enums.LocationUpdateError.INVALID_LATITUDE;
-import static com.driver.enums.LocationUpdateError.INVALID_LONGITUDE;
+import static com.driver.enums.DriverServiceError.INVALID_LATITUDE;
+import static com.driver.enums.DriverServiceError.INVALID_LONGITUDE;
 
 @Service
 public class FindDriverValidator {

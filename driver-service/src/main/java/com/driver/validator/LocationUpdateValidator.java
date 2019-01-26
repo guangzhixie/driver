@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.driver.validator.util.*;
 
-import static com.driver.enums.LocationUpdateError.*;
+import static com.driver.enums.DriverServiceError.*;
 
 @Service
 public class LocationUpdateValidator {

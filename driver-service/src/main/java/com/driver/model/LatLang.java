@@ -7,5 +7,4 @@ import lombok.Data;
 @AllArgsConstructor
 public class LatLang {
     private double latitude, longitude;
-    private float accuracy;
 }

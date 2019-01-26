@@ -4,6 +4,8 @@ import com.driver.cache.DriverLocationCache;
 import com.driver.model.LatLang;
 import com.driver.service.DriverService;
 import com.driver.validator.LocationUpdateValidator;
+import com.driver.web.model.FindDriverRequest;
+import com.driver.web.model.FindDriverResponse;
 import com.driver.web.model.LocationRequest;
 import com.driver.web.model.LocationResponse;
 import org.slf4j.Logger;
@@ -30,9 +32,14 @@ public class DriverServiceImpl implements DriverService {
             return locationResponseAfterValidation;
         }
 
-        driverLocationCache.updateLocation(id, new LatLang(locationRequest.getLatitude(), locationRequest.getLongitude(), locationRequest.getAccuracy()));
+        driverLocationCache.updateLocation(id, new LatLang(locationRequest.getLatitude(), locationRequest.getLongitude()));
         //TODO: update to DB
 
         return new LocationResponse(HttpStatus.OK, null);
+    }
+
+    @Override
+    public FindDriverResponse findDriver(FindDriverRequest findDriverRequest) {
+        return null;
     }
 }

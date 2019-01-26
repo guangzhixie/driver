@@ -10,9 +10,17 @@ import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class FindDriverResponse extends BaseResponse<List<DriverLocation>> {
+public class FindDriverResponse extends BasicResponse {
+
+    private List<DriverLocation> driverLocations;
+
     @Builder
-    public FindDriverResponse(HttpStatus httpStatus, List<DriverLocation> driverLocations) {
-        super(httpStatus, driverLocations);
+    public FindDriverResponse(HttpStatus httpStatus, List<String> errors, List<DriverLocation> driverLocations) {
+        super(httpStatus, errors);
+        this.driverLocations = driverLocations;
+    }
+
+    public Object constructResponseBody() {
+        return errors != null? this : driverLocations;
     }
 }

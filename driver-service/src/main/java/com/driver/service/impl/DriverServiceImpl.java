@@ -3,17 +3,19 @@ package com.driver.service.impl;
 import com.driver.cache.DriverLocationCache;
 import com.driver.model.LatLang;
 import com.driver.service.DriverService;
+import com.driver.validator.FindDriverValidator;
 import com.driver.validator.LocationUpdateValidator;
+import com.driver.web.model.BasicResponse;
 import com.driver.web.model.FindDriverRequest;
 import com.driver.web.model.FindDriverResponse;
 import com.driver.web.model.LocationRequest;
-import com.driver.web.model.LocationResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 @Service
 public class DriverServiceImpl implements DriverService {
@@ -23,23 +25,31 @@ public class DriverServiceImpl implements DriverService {
     private LocationUpdateValidator locationUpdateValidator;
 
     @Resource
+    private FindDriverValidator findDriverValidator;
+
+    @Resource
     private DriverLocationCache driverLocationCache;
 
     @Override
-    public LocationResponse updateLocation(int id, LocationRequest locationRequest) {
-        LocationResponse locationResponseAfterValidation = locationUpdateValidator.validate(id, locationRequest);
-        if (locationResponseAfterValidation != null) {
-            return locationResponseAfterValidation;
+    public BasicResponse updateLocation(int id, LocationRequest locationRequest) {
+        BasicResponse validationResponse = locationUpdateValidator.validate(id, locationRequest);
+        if (validationResponse != null) {
+            return validationResponse;
         }
 
         driverLocationCache.updateLocation(id, new LatLang(locationRequest.getLatitude(), locationRequest.getLongitude()));
         //TODO: update to DB
 
-        return new LocationResponse(HttpStatus.OK, null);
+        return new BasicResponse(HttpStatus.OK, null);
     }
 
     @Override
     public FindDriverResponse findDriver(FindDriverRequest findDriverRequest) {
-        return null;
+        FindDriverResponse validationResponse = findDriverValidator.validate(findDriverRequest);
+        if (validationResponse != null) {
+            return validationResponse;
+        }
+        //TODO: find driver
+        return new FindDriverResponse(HttpStatus.OK, null, new ArrayList<>(0));
     }
 }

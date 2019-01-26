@@ -7,15 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
+
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL;
 
 @Data
 @JsonInclude(NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
-abstract class BaseResponse<T> {
+public class BasicResponse {
     @JsonIgnore
     HttpStatus httpStatus;
 
-    T responseBody;
+    List<String> errors;
 }

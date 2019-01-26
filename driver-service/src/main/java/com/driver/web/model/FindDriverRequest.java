@@ -1,18 +1,13 @@
 package com.driver.web.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 
 import javax.validation.constraints.NotNull;
 
 @Data
-@Getter
+@AllArgsConstructor
 public class FindDriverRequest {
-    @NotNull(message = "Must provide latitude")
-    private Double latitude;
-
-    @NotNull(message = "Must provide longitude")
-    private Double longitude;
-
-    private int radius, limit;
+    private Double latitude, longitude;
+    private Integer radius, limit;
 }

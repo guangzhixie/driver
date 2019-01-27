@@ -6,6 +6,8 @@ import com.driver.persistence.entity.DriverLocationEntity;
 import com.driver.persistence.repository.DriverRepository;
 import com.driver.service.UpdateLocationHandler;
 import com.driver.web.model.LocationRequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,8 @@ import java.util.concurrent.Executors;
 
 @Service
 public class UpdateLocationHandlerImpl implements UpdateLocationHandler {
+    private static final Logger logger = LoggerFactory.getLogger(UpdateLocationHandlerImpl.class);
+
     //TODO: move to centralized config
     private static final int CONCURRENCY_LEVEL = 5;
 
@@ -39,17 +43,21 @@ public class UpdateLocationHandlerImpl implements UpdateLocationHandler {
     }
 
     private void updateLocationInDB(Integer id, LocationRequest locationRequest) {
-        LocalDateTime currentTimeInGmt = LocalDateTime.now(Clock.systemUTC());
-        DriverLocationEntity entityToUpdate = DriverLocationEntity.builder()
-                .id(id)
-                .latitude(locationRequest.getLatitude())
-                .longitude(locationRequest.getLongitude())
-                .accuracy(locationRequest.getAccuracy())
-                .gmt_modified(currentTimeInGmt)
-                .build();
-        if (!driverRepository.existsById(id)) {
-            entityToUpdate.setGmt_create(currentTimeInGmt);
+        try {
+            LocalDateTime currentTimeInGmt = LocalDateTime.now(Clock.systemUTC());
+            DriverLocationEntity entityToUpdate = DriverLocationEntity.builder()
+                    .id(id)
+                    .latitude(locationRequest.getLatitude())
+                    .longitude(locationRequest.getLongitude())
+                    .accuracy(locationRequest.getAccuracy())
+                    .gmt_modified(currentTimeInGmt)
+                    .build();
+            if (!driverRepository.existsById(id)) {
+                entityToUpdate.setGmt_create(currentTimeInGmt);
+            }
+            driverRepository.save(entityToUpdate);
+        } catch (Exception e) {
+            logger.error("Failed to update DB. id={}, locationRequest={}", id, locationRequest, e);
         }
-        driverRepository.save(entityToUpdate);
     }
 }

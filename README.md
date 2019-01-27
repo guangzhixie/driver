@@ -61,6 +61,22 @@ This project is a simple application for drivers to update their locations, and 
 - Docker Compose
 
 
+## Setup instruction
+
+[run.sh](run.sh) is provided for easy build and deployment. Please make sure all the infrastructure requirements are satisfied before running the script.
+
+To stop the application, please run the following command on the root directory:
+
+```bash
+docker-compose down
+```
+
+To bring it up again, please run the following command on the root directory:
+
+```bash
+docker-compose up
+```
+
 ## Future Improvements
 
 As I only have limited time at the weekend to do the actual coding, there are some points for future improvements (some of them are also marked as **TODO** in the code).
@@ -84,6 +100,8 @@ As I only have limited time at the weekend to do the actual coding, there are so
 - **Database**
     
     - Currently I only have one table to store each driver's latest location. The DB update process is async in the application to prevent the DB performance to block the main flow. We should have a table to store driver's basic information, and a table to store each driver's all historical locations in order for data analysis.
-    
+
+    - Liquibase should be used to create and alter table, for easy tracking.
+
 
 

@@ -91,7 +91,7 @@ As I only have limited time at the weekend to do the actual coding, there are so
 
 - **Security**
     
-    - Need to use HTTPS for REST connection
+    - Need to use HTTPS for REST connection.
 
     - Each request needs to be authorized and authenticated.
 
@@ -99,9 +99,9 @@ As I only have limited time at the weekend to do the actual coding, there are so
 
 - **Database**
     
-    - Currently I only have one table to store each driver's latest location. The DB update process is async in the application to prevent the DB performance to block the main flow. We should have a table to store driver's basic information, and a table to store each driver's all historical locations in order for data analysis.
+    - Currently I only have one table to store each driver's latest location. The DB update process is async in the application to prevent the DB performance to block the main flow. Drivers' last locations will be preloaded into the cache when application boots up. We should add a table to store driver's basic information, and a table to store each driver's historical locations in order for data analysis.
 
-    - Liquibase should be used to create and alter table, for easy tracking.
+    - Liquibase should be used to create and alter tables, for easy tracking.
 
 
 

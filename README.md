@@ -59,3 +59,31 @@ This project is a simple application for drivers to update their locations, and 
 - JDK 1.8
 - Docker
 - Docker Compose
+
+
+## Future Improvements
+
+As I only have limited time at the weekend to do the actual coding, there are some points for future improvements (some of them are also marked as **TODO** in the code).
+
+- **Performance**
+    
+    - A load test needs to be added.
+
+    - Currently Guava cache should have no issue to host 50,000 entries of driver locations in memory in a single standard machine. However, if we want to scale out to have multiple instances running, we need to use **Hazelcast** or **Redis** as a distributed cache to replace the Guava cache. We also need to have **centralized config, centralized logging, service discovery, and load balancer** in place. The application itself is stateless so it will be fine in the microservice architecture.
+
+    - The algorithm currently in use to find the nearby driver is very simple but inefficient. A more advanced algo like **GeoHash** should be used if we want to achieve a higher performance.
+
+- **Security**
+    
+    - Need to use HTTPS for REST connection
+
+    - Each request needs to be authorized and authenticated.
+
+    - Each request should have a signature.
+
+- **Database**
+    
+    - Currently I only have one table to store each driver's latest location. The DB update process is async in the application to prevent the DB performance to block the main flow. We should have a table to store driver's basic information, and a table to store each driver's all historical locations in order for data analysis.
+    
+
+

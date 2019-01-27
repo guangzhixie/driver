@@ -1,6 +1,6 @@
 # Driver Service
 
-This project is a simple application to for drivers to update their location, and for users to find drivers nearby.
+This project is a simple application for drivers to update their locations, and for users to find drivers nearby.
 
 ## Overview of tech stack 
 
@@ -27,3 +27,9 @@ This project is a simple application to for drivers to update their location, an
     - Cucumber
 
     - Mockito
+
+## Infrastructure requirements
+
+- JDK 1.8
+- Docker
+- Docker Compose

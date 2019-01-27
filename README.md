@@ -6,24 +6,24 @@ This project is a simple application to for drivers to update their location, an
 
 - **Language**
 
-Java
+    - Java
 
 - **Web Framework**
 
-Spring Boot
+    - Spring Boot
 
 - **Database**
 
-MySQL for production
+    - MySQL for production
 
-H2 for integration test
+    - H2 for integration test
 
 - **Build**
 
-Gradle
+    - Gradle
 
 - **Test**
 
-Cucumber
+    - Cucumber
 
-Mockito
+    - Mockito

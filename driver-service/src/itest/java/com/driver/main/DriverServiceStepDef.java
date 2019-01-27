@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-@ContextConfiguration(classes = {DriverServiceApplication.class})
+@ContextConfiguration(classes = {DriverServiceITApplication.class})
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class DriverServiceStepDef {
 

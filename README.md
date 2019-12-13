@@ -2,7 +2,7 @@
 
 This project is a simple application for drivers to update their locations, and for users to find drivers nearby.
 
-## Overview of tech stack 
+## Overview of Tech Stack 
 
 - **Language**
 
@@ -43,7 +43,7 @@ This project is a simple application for drivers to update their locations, and 
     - Docker Compose
 
 
-## Tech stack description
+## Tech Stack Descriptions
 
 **Java + Spring Boot + Gradle** is a popular stack for fast deliver stand-alone, production-grade application. **Mockito** makes it easy to unit-test the services with dependency injections. **Cucumber** test framework implements the BDD concept to make sure the application is working as expected. **Lombok** allows us to write much lesser code when creating models. **JPA** provides a convenient way for persistence operations.
 
@@ -54,14 +54,14 @@ This project is a simple application for drivers to update their locations, and 
 **Docker** enables us to easily pack, ship, and run the application as a lightweight, portable, self-sufficient container, which can run virtually anywhere. **Docker Compose** further helps to define and run multi-container Docker applications, in this case, the main web application and the MySQL database. They all help to simplify and accelerate the deployment and operation process.
 
 
-## Infrastructure requirements
+## Infrastructure Requirements
 
 - JDK 1.8
 - Docker
 - Docker Compose
 
 
-## Setup instruction
+## Setup Instructions
 
 [run.sh](run.sh) is provided for easy build and deployment. Please make sure all the infrastructure requirements are satisfied before running the script.
 

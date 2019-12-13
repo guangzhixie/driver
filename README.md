@@ -1,6 +1,6 @@
 # Driver Service
 
-This project is a simple application for drivers to update their locations, and for users to find drivers nearby.
+This project is a simple ride hailing Java backend application for drivers to update their locations, and for passengers to find drivers nearby.
 
 ## Overview of Tech Stack 
 
